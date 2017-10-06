@@ -3,18 +3,44 @@ from SocketServer import ThreadingMixIn
 import urlparse, json
 import threading
 import sys
+import random
 
-players_connected = 0
 lock = threading.Lock()
 post_lock = threading.Lock()
-MAX_PLAYERS = 2
+players_connected = 0
+MAX_PLAYERS = 1
 gameIdCalculated = False
 gameRunning = False
 nextGameId = 0
 playerIdGen = 0
-totalGames = 4
+totalGames = 2
 livesPerGame = 4
-lives = {0: livesPerGame, 1: livesPerGame}
+lives =  [livesPerGame,  livesPerGame,
+          livesPerGame,  livesPerGame]
+GAME_ORDER = [x for x in range(totalGames)]
+random.shuffle(GAME_ORDER)
+
+def reset_state():
+    global players_connected 
+    global MAX_PLAYERS 
+    global gameIdCalculated 
+    global gameRunning 
+    global nextGameId 
+    global playerIdGen 
+    global totalGames 
+    global livesPerGame 
+    global lives 
+    players_connected = 0
+    MAX_PLAYERS = 1
+    gameIdCalculated = False
+    gameRunning = False
+    nextGameId = 0
+    playerIdGen = 0
+    totalGames = 2
+    livesPerGame = 4
+    lives =  [livesPerGame,  livesPerGame,
+              livesPerGame,  livesPerGame]
+
 
 def next_id():
     global playerIdGen
@@ -35,10 +61,14 @@ class Handler(BaseHTTPRequestHandler):
         global MAX_PLAYERS
         global gameIdCalculated
         global nextGameId
+        global GAME_ORDER
         self.send_response(200)
         self.send_header("Content-type", "application/json")
-        print "recibi peticion " + str(players_connected)
         self.end_headers()
+        if (self.path == "/reset"):
+            reset_state()
+            return
+        
         lock.acquire()
         if players_connected == MAX_PLAYERS:
             players_connected = 0
@@ -53,8 +83,9 @@ class Handler(BaseHTTPRequestHandler):
 
         gameIdCalculated = False
 
-        json = "{{\"player_id\": {0}, \"game_id\": {1}}}".format(currentPlayerId, nextGameId)
-        print json
+        json = "{{\"player_id\": {0}, \"game_id\": {1}}}".format(currentPlayerId, GAME_ORDER[nextGameId])
+        #json = "{{\"player_id\": {0}, \"game_id\": {1}}}".format(currentPlayerId, 0)
+        print "returning from get: " + json
 
         self.wfile.write(json);
         return
@@ -65,13 +96,13 @@ class Handler(BaseHTTPRequestHandler):
         global lives
         global post_lock
         global players_connected
+        global GAME_ORDER
         content_len = int(self.headers.getheader('content-length'))
         post_body = self.rfile.read(content_len)
         self.send_response(200)
         self.end_headers()
 
         data = json.loads(post_body)
-        print data
 
         post_lock.acquire()
         if players_connected == MAX_PLAYERS:
@@ -90,13 +121,15 @@ class Handler(BaseHTTPRequestHandler):
             pass
         gameIdCalculated = False
 
-        self.wfile.write(json.dumps({'game_id': nextGameId, 'lives': lives}))
+        msg = json.dumps({'game_id': GAME_ORDER[nextGameId], 'lives': lives})
+        print "returning from post " + msg
+        self.wfile.write(msg)
         return
 
 class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
     """arst """
 
 if __name__ == '__main__':
-    server = ThreadedHTTPServer(('localhost', int(sys.argv[1])), Handler)
+    server = ThreadedHTTPServer(('192.168.6.117', int(sys.argv[1])), Handler)
     print 'Starting server on 192.168.2.172:' + sys.argv[1]
     server.serve_forever()
