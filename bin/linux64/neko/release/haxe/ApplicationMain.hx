@@ -24,7 +24,7 @@ import haxe.macro.Expr;
 		
 		var config = {
 			
-			build: "1",
+			build: "2",
 			company: "",
 			file: "Main",
 			fps: 60,

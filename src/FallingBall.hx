@@ -3,6 +3,7 @@ import com.haxepunk.graphics.Image;
 import com.haxepunk.HXP;
 import com.haxepunk.Entity;
 import com.haxepunk.graphics.Backdrop;
+import com.haxepunk.graphics.Graphiclist;
 
 class FallingBall extends Scene
 {
@@ -12,8 +13,6 @@ class FallingBall extends Scene
 		var b1:Backdrop;
 		var b2:Backdrop;
 		var background:Entity;
-
-		HXP.stage.color = 0x0000000;
 
 		b1 = new Backdrop("graphics/sky.png", true);
 		b1.scrollX = 0.4;
@@ -29,6 +28,6 @@ class FallingBall extends Scene
 	}
 
 	override public function update() {
-		//sky.y += 10;
+		camera.y += 2;
 	}
 }
