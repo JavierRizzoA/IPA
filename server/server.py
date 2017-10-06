@@ -8,12 +8,12 @@ import random
 lock = threading.Lock()
 post_lock = threading.Lock()
 players_connected = 0
-MAX_PLAYERS = 1
+MAX_PLAYERS = 4
 gameIdCalculated = False
 gameRunning = False
 nextGameId = 0
 playerIdGen = 0
-totalGames = 2
+totalGames = 5
 livesPerGame = 4
 lives =  [livesPerGame,  livesPerGame,
           livesPerGame,  livesPerGame]
@@ -22,21 +22,17 @@ random.shuffle(GAME_ORDER)
 
 def reset_state():
     global players_connected 
-    global MAX_PLAYERS 
     global gameIdCalculated 
     global gameRunning 
     global nextGameId 
     global playerIdGen 
-    global totalGames 
     global livesPerGame 
     global lives 
     players_connected = 0
-    MAX_PLAYERS = 1
     gameIdCalculated = False
     gameRunning = False
     nextGameId = 0
     playerIdGen = 0
-    totalGames = 2
     livesPerGame = 4
     lives =  [livesPerGame,  livesPerGame,
               livesPerGame,  livesPerGame]
@@ -62,13 +58,16 @@ class Handler(BaseHTTPRequestHandler):
         global gameIdCalculated
         global nextGameId
         global GAME_ORDER
+        global lives
         self.send_response(200)
         self.send_header("Content-type", "application/json")
         self.end_headers()
         if (self.path == "/reset"):
             reset_state()
             return
-        
+
+        lives = [livesPerGame,  livesPerGame,
+                 livesPerGame,  livesPerGame]
         lock.acquire()
         if players_connected == MAX_PLAYERS:
             players_connected = 0
