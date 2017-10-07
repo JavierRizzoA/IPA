@@ -129,6 +129,6 @@ class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
     """arst """
 
 if __name__ == '__main__':
-    server = ThreadedHTTPServer(('192.168.6.117', int(sys.argv[1])), Handler)
-    print 'Starting server on 192.168.2.172:' + sys.argv[1]
+    server = ThreadedHTTPServer(('0.0.0.0', int(sys.argv[1])), Handler)
+    print 'Starting server on javierrizzo.com:' + sys.argv[1]
     server.serve_forever()
