@@ -18,13 +18,13 @@ class Score extends Scene {
 		HXP.screen.scaleMode.setBaseSize(960, 540);
 		HXP.resize(HXP.windowWidth, HXP.windowHeight);
 		add(new Entity(20, 20, new Text("Lives", 0, 0, 200, 200)));
+		var options = { color: 0xFF0000 };
 		var array:Array<Text> = [new Text("" + state.lives[0], 100, 100, 200, 200),
 		new Text("" + state.lives[1], 100, 100, 200, 200),
 		new Text("" + state.lives[2], 100, 100, 200, 200),
 		new Text("" + state.lives[3], 100, 100, 200, 200)];
 
-		trace(Globals.player_id);
-		array[Globals.player_id].addStyle("red", {color: 0xFF0000});
+		array[Globals.player_id] = new Text("" + state.lives[1], 100, 100, 200, 200, options);
 
 		for(i in array) {
 			i.size = 60;
