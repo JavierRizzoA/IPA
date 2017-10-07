@@ -22,9 +22,9 @@ class Score extends Scene {
 			HXP.scene = new GameOver(true);
 		}
 
-		HXP.screen.scaleMode = new ScaleMode();
+		/*HXP.screen.scaleMode = new ScaleMode();
 		HXP.screen.scaleMode.setBaseSize(960, 540);
-		HXP.resize(HXP.windowWidth, HXP.windowHeight);
+		HXP.resize(HXP.windowWidth, HXP.windowHeight);*/
 		add(new Entity(20, 20, new Text("Lives", 0, 0, 200, 200)));
 		var options = { color: 0xFF0000 };
 		var array:Array<Text> = [new Text("" + state.lives[0], 100, 100, 200, 200),
