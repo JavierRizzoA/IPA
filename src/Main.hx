@@ -8,7 +8,7 @@ class Main extends Engine
 #if debug
 		HXP.console.enable();
 #end
-		HXP.scene = new FlappyGuy();
+		HXP.scene = new Loading();
 	}
 
 	public static function main() { new Main(); }

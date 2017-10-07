@@ -27,9 +27,9 @@ class FlappyGuy extends Scene {
     }
 
     if(time > 4) {
-      //Globals.get_next_game(!bird.dead, function(data) {
-       // HXP.scene = new Score(data);
-      //});
+      Globals.get_next_game(!bird.dead, function(data) {
+        HXP.scene = new Score(data);
+      });
     }
     super.update();
   }

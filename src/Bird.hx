@@ -36,7 +36,7 @@ class Bird extends Entity {
       m = true;
     }
 
-    if(this.collide("pipe", x, y) != null || y < 0 || y > HXP.height - 50w * HXP.height / 540) {
+    if(this.collide("pipe", x, y) != null || y < 0 || y > HXP.height - 50 * HXP.height / 540) {
       dead = true;
 
     }
