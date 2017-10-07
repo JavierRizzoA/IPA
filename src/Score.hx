@@ -14,6 +14,14 @@ class Score extends Scene {
 	}
 
 	override public function begin() {
+		if(state.lives[Globals.player_id] == 0) {
+			HXP.scene = new GameOver(false);
+		}
+
+		if(state.won != null) {
+			HXP.scene = new GameOver(true);
+		}
+
 		HXP.screen.scaleMode = new ScaleMode();
 		HXP.screen.scaleMode.setBaseSize(960, 540);
 		HXP.resize(HXP.windowWidth, HXP.windowHeight);
@@ -25,6 +33,7 @@ class Score extends Scene {
 		new Text("" + state.lives[3], 100, 100, 200, 200)];
 
 		array[Globals.player_id] = new Text("" + state.lives[Globals.player_id], 100, 100, 200, 200, options);
+
 
 		for(i in array) {
 			i.size = 60;
