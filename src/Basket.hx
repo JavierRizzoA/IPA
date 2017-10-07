@@ -12,6 +12,7 @@ class Basket extends Scene
 	public var Background:Entity;
 	public var total:Int;
 	public var winer:Bool;
+	private var time:Float = 0;
 
 	public function new(){
 		super();
@@ -28,7 +29,11 @@ class Basket extends Scene
 	}
 
 	override public function update() {
-		
+		time += HXP.elapsed;
+		if(time > 4) {
+			HXP.scene = new Score(Globals.get_next_game(winer));
+		}
+
 		Good.update();
 		Good1.update();
 		Good2.update();	

@@ -4,6 +4,7 @@ import com.haxepunk.Scene;
 class FlappyGuy extends Scene {
 
   private var bird:Bird;
+  private var time:Float = 0;
 
   public override function begin() {
     bird = new Bird(HXP.width / 3, HXP.height / 3);
@@ -17,7 +18,10 @@ class FlappyGuy extends Scene {
   }
 
   public override function update() {
-
+    time += HXP.elapsed;
+    if(time > 4) {
+      HXP.scene = new Score(Globals.get_next_game(!bird.dead));
+    }
     super.update();
   }
 

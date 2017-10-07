@@ -9,6 +9,8 @@ class Baseball extends Scene {
   private var changed:Bool;
   private var time:Float;
   private var thrown:Bool;
+  private var e:Float = 0;
+  private var ball:BaseballBall;
 
   public override function begin() {
     super.begin();
@@ -28,6 +30,13 @@ class Baseball extends Scene {
 
   public override function update() {
     super.update();
+
+    e += HXP.elapsed;
+
+    if(e > 4) {
+      HXP.scene = new Score(Globals.get_next_game(ball.hit));
+    }
+
     if(Std.random(90) == 0 && !changed) {
       var pitchImg = new Image("graphics/pitcher2.png");
       pitchImg.scale = HXP.height / 540;
@@ -40,13 +49,13 @@ class Baseball extends Scene {
       time -= HXP.elapsed;
     }
     if(time < 0 && !thrown) {
-      add(new BaseballBall(300*HXP.height/540, 225*HXP.height/540));
+      ball = new BaseballBall(300*HXP.height/540, 225*HXP.height/540);
+      add(ball);
       thrown = true;
       var pitchImg = new Image("graphics/pitcher1.png");
       pitchImg.scale = HXP.height / 540;
       pitchImg.centerOrigin();
       pitcher.graphic = pitchImg;
-
     }
   }
 }

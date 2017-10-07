@@ -15,6 +15,9 @@ class Globals {
 		switch game_id {
 			case 0: return new FallingBall();
 			case 1: return new BarGame();
+			case 2: return new Basket();
+			case 3: return new Baseball();
+			case 4: return new FlappyGuy();
 			default: return null;
 		}
 	}
