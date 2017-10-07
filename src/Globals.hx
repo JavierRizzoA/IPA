@@ -5,7 +5,7 @@ class Globals {
 	public static var player_id:Int;
 
 	public static function greet():Dynamic {
-		var message:Http = new Http("192.168.6.117:8000");
+		var message:Http = new Http("javierrizzo.com:8000");
 		message.cnxTimeout = 180;
 		message.request(false);
 		return haxe.Json.parse(message.responseData);
@@ -23,7 +23,7 @@ class Globals {
 	}
 
 	public static function get_next_game(?win:Bool = false):Dynamic {
-		var message:Http = new Http("192.168.6.117:8000");
+		var message:Http = new Http("javierrizzo.com:8000");
 		var send:Dynamic = {
 			player_id: Globals.player_id,
 			player_won: win
