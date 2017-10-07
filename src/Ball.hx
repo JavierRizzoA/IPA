@@ -24,7 +24,7 @@ class Ball extends Entity
 		I=i;
         graphic = sprite;
         Input.define("up", [Key.SPACE]);
-        setHitbox(32, 32);
+        setHitbox(Std.int(32*HXP.height/540), Std.int(32*HXP.height/540));
         type = "bullet";
     }
 
@@ -57,7 +57,7 @@ class Ball extends Entity
         acceleration = 0;
 
 
-        if (Input.check("up"))
+        if (Input.check("up")||Input.mouseDown)
         {
             acceleration = 1.5;
         }
@@ -72,7 +72,7 @@ class Ball extends Entity
         }
      
 
-        moveBy(velocity, 0);
+        moveBy(velocity*HXP.height/540, 0);
     }
 
     public override function update()
@@ -84,7 +84,7 @@ class Ball extends Entity
         move();
 		
         setAnimations();
-        y=y-(0.3+I);
+        y=y-(0.3+I)*HXP.height/540;
 
         super.update();
     }

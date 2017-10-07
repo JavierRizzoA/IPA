@@ -4,11 +4,14 @@ import com.haxepunk.Scene;
 class Globals {
 	public static var player_id:Int;
 
-	public static function greet():Dynamic {
+	public static function greet(fn:Dynamic->Void):Void {
 		var message:Http = new Http("javierrizzo.com:8000");
 		message.cnxTimeout = 180;
+		message.onData = fn;
+		message.onError = function(data) {
+			trace("ERROR: " + data);
+		};
 		message.request(false);
-		return haxe.Json.parse(message.responseData);
 	}
 
 	public static function get_scene(game_id:Int):Scene {
@@ -22,7 +25,7 @@ class Globals {
 		}
 	}
 
-	public static function get_next_game(?win:Bool = false):Dynamic {
+	public static function get_next_game(?win:Bool = false, fn:Dynamic->Void):Void {
 		var message:Http = new Http("javierrizzo.com:8000");
 		var send:Dynamic = {
 			player_id: Globals.player_id,
@@ -30,7 +33,10 @@ class Globals {
 		};
 		message.setPostData(haxe.Json.stringify(send));
 		message.cnxTimeout = 180;
+		message.onData = fn;
+		message.onError = function(data) {
+			trace(data);
+		}
 		message.request(true);
-		return haxe.Json.parse(message.responseData);
 	}
 }

@@ -22,8 +22,7 @@ class Basket extends Scene
 
 	override public function begin(){
 		
-		HXP.screen.scaleX = HXP.width / 960;
-		HXP.screen.scaleY = HXP.height / 540;
+
 		add(Background); 
 		add(Hole1);
 		add(Good);
@@ -33,8 +32,11 @@ class Basket extends Scene
 
 	override public function update() {
 		time += HXP.elapsed;
-		if(time > 4) {
-			HXP.scene = new Score(Globals.get_next_game(winer));
+		if(time > 6) {
+		    Globals.get_next_game(winer, function(data) {
+		 		trace(data);
+        		HXP.scene = new Score(data);
+      		});
 		}
 
 		Good.update();
@@ -42,22 +44,22 @@ class Basket extends Scene
 		Good2.update();	
 		
 		
-		if(Hole1.collideWith(Good1,320,32)!= null){
+		if(Hole1.collideWith(Good1,416*HXP.height/540,32*HXP.height/540)!= null){
 			Good1.destroy();
 			total--;
 		}
 
-		if(Hole1.collideWith(Good,320,32)!= null){
+		if(Hole1.collideWith(Good,416*HXP.height/540,32*HXP.height/540)!= null){
 			Good.destroy();
 			total--;
 		}
 
-		if(Hole1.collideWith(Good2,320,32)!= null){
+		if(Hole1.collideWith(Good2,416*HXP.height/540,32*HXP.height/540)!= null){
 			Good2.destroy();
 			total--;
 		}
 
-		if (total<=1){
+		if (total<=1){	
 			winer=true;
 			//this.end();
 		}
@@ -65,15 +67,15 @@ class Basket extends Scene
 	}
 
 	public function initial(){
-		Good= new Ball(0,416,HXP.random);
-		Good1= new Ball(320,416,HXP.random);
-		Good2= new Ball(576,416,HXP.random);
+		Good= new Ball(Std.int(0*HXP.height/540),Std.int(476*HXP.height/540),HXP.random);
+		Good1= new Ball(Std.int(416*HXP.height/540	),Std.int(476*HXP.height/540),HXP.random);
+		Good2= new Ball(Std.int(896*HXP.height/540),Std.int(476*HXP.height/540),HXP.random);
 		
-		Hole1= new Entity(320,0,new Image("graphics/goal.png"));
+		Hole1= new Entity(416*HXP.height/540,0*HXP.height/540,new Image("graphics/goal.png"));
 		
-		Background= new Entity(0,0,new Image("graphics/background1.png"));
+		Background= new Entity(0*HXP.height/540,0*HXP.height/540,new Image("graphics/background1.png"));
 
-		Hole1.collide("SOLID",320,0);
+		Hole1.collide("SOLID",Std.int(416*HXP.height/540),Std.int(0*HXP.height/540));
 
 	}
 

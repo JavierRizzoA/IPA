@@ -1,5 +1,7 @@
 import com.haxepunk.HXP;
 import com.haxepunk.Scene;
+import com.haxepunk.utils.Input;
+import com.haxepunk.utils.Key;
 
 class FlappyGuy extends Scene {
 
@@ -19,8 +21,11 @@ class FlappyGuy extends Scene {
 
   public override function update() {
     time += HXP.elapsed;
+    
     if(time > 4) {
-      HXP.scene = new Score(Globals.get_next_game(!bird.dead));
+      Globals.get_next_game(!bird.dead, function(data) {
+        HXP.scene = new Score(data);
+      });
     }
     super.update();
   }

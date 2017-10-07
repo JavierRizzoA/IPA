@@ -17,7 +17,7 @@ class Baseball extends Scene {
     var im:Image = new Image("graphics/baseballpark.png");
     im.scale = HXP.height / 540;
     addGraphic(im);
-    bat = new Bat(840*HXP.height/540, HXP.height / 2);
+    bat = new Bat(840 * HXP.height / 540, HXP.height / 2);
     add(bat);
     var pitchImg = new Image("graphics/pitcher1.png");
     pitchImg.scale = HXP.height / 540;
@@ -33,8 +33,10 @@ class Baseball extends Scene {
 
     e += HXP.elapsed;
 
-    if(e > 4) {
-      HXP.scene = new Score(Globals.get_next_game(ball.hit));
+    if(e > 7) {
+      Globals.get_next_game(ball.hit, function(data) {
+        HXP.scene = new Score(data);
+      });
     }
 
     if(Std.random(90) == 0 && !changed) {

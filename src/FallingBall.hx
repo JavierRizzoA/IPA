@@ -17,6 +17,7 @@ class FallingBall extends Scene
 	var time:Float = 0;
 	var win:Bool;
 	var finished:Bool = false;
+	var resized:Bool = false;
 
 	override public function begin()
 	{
@@ -75,6 +76,11 @@ class FallingBall extends Scene
 	override public function update() {
 		super.update();
 
+		if(!resized) {
+			HXP.resize(HXP.windowWidth, HXP.windowHeight);
+			resized = true;
+		}
+
 		time += HXP.elapsed;
 
 		if(time >= 5 && !finished) {
@@ -99,12 +105,13 @@ class FallingBall extends Scene
 				bottle.x = 930;
 			}
 
-			if(Input.check(Key.RIGHT)) {
-				bottle.x += 20;
-			}
-
-			if(Input.check(Key.LEFT)) {
-				bottle.x -= 20;
+			if(Input.mouseDown) {
+				if(Input.mouseX <= 480) {
+					bottle.x -= 20;
+				}
+				else {
+					bottle.x += 20;
+				}
 			}
 
 			bottle.x += bottle_speed;
@@ -118,7 +125,9 @@ class FallingBall extends Scene
 			}
 
 			if(time > 7) {
-				HXP.scene = new Score(Globals.get_next_game(win));
+				Globals.get_next_game(win, function(data) {
+					HXP.scene = new Score(data);
+      			});
 			}
 		}
 	}

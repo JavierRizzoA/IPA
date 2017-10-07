@@ -4,6 +4,7 @@ import com.haxepunk.Entity;
 import com.haxepunk.graphics.Image;
 import com.haxepunk.utils.Input;
 import com.haxepunk.utils.Key;
+import com.haxepunk.Sfx;
 
 class BarGame extends Scene {
 
@@ -15,10 +16,17 @@ class BarGame extends Scene {
   private var cagua:Entity;
   private var time:Float = 0;
   private var wait_time:Float = 5;
+  private var fail:Sfx;
+  private var win:Sfx;
+  private var slide:Sfx;
 
   override public function begin() {
     anims = [for(i in 0 ... 8) new Image("graphics/bar/sprite_" + i + ".png")];
     animsT = [0.5, 0.1, 0.1, (Std.random(1000) + 1) / 1000, 1000000, 0.1, 0.4, 1000000];
+
+    win = new Sfx("audio/RogeliaSucc.ogg");
+    fail = new Sfx("audio/RogeliaFail.ogg");
+    slide = new Sfx("audio/RogeliaSlide.ogg");
 
     for(i in 0 ... 8) {
       anims[i].scale = HXP.height / 540;
@@ -34,7 +42,13 @@ class BarGame extends Scene {
     time += HXP.elapsed;
 
     if(time >= wait_time) {
-      HXP.scene = new Score(Globals.get_next_game(cashada));
+      if(!cashada) {
+        slide.stop();
+        fail.play();
+      }
+      Globals.get_next_game(cashada, function(data) {
+        HXP.scene = new Score(data);
+      });
     }
 
     animsT[frame] -= HXP.elapsed;
@@ -47,6 +61,7 @@ class BarGame extends Scene {
 
       if(frame == 4) {
         cagua = new Rogelia(HXP.width + 100, HXP.height / 2);
+        slide.loop();
         add(cagua);
       }
 
@@ -58,6 +73,8 @@ class BarGame extends Scene {
     }
 
     if(cashada) {
+      slide.stop();
+      win.play();
       var im = new Image("graphics/bar/cashada.png");
       im.scale = HXP.height / 540;
       e.graphic = im;

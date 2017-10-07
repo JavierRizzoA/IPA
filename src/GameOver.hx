@@ -9,9 +9,13 @@ class GameOver extends Scene
 	
 	public var Background:Entity;
 
-	public function new(){
-
-		Background= new Entity(0,0,new Image("graphics/gameover.png"));
+	public function new(win:Bool){
+		if(win) {
+			Background= new Entity(0,0,new Image("graphics/gameover.png"));
+		}
+		else {
+			Background = new Entity(0, 0, new Image("graphics/youwin.jpg"));
+		}
 		super();
 	}
 
