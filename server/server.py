@@ -14,7 +14,7 @@ gameRunning = False
 nextGameId = 0
 playerIdGen = 0
 totalGames = 5
-livesPerGame = 3
+livesPerGame = 4
 PLAYERS_NOT_COUNTED = 0
 lives =  [livesPerGame,  livesPerGame,
           livesPerGame,  livesPerGame]
