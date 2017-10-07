@@ -8,9 +8,11 @@ class Loading extends Scene {
 	override public function begin() {
 		add(new Entity(0, 0, new Backdrop("graphics/sky.png", true, true)));
 
-		var greet:Dynamic = Globals.greet();
-		Globals.player_id = greet.player_id;
-		HXP.scene = Globals.get_scene(greet.game_id);
+		Globals.greet(function(data:String) {
+			var d:Dynamic = haxe.Json.parse(data);
+			Globals.player_id = d.player_id;
+			HXP.scene = Globals.get_scene(d.game_id);
+		});
 	}
 
 	override public function update() {

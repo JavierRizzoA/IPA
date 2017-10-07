@@ -34,7 +34,9 @@ class BarGame extends Scene {
     time += HXP.elapsed;
 
     if(time >= wait_time) {
-      HXP.scene = new Score(Globals.get_next_game(cashada));
+      Globals.get_next_game(cashada, function(data) {
+        HXP.scene = new Score(data);
+      });
     }
 
     animsT[frame] -= HXP.elapsed;
