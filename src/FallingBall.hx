@@ -8,6 +8,7 @@ import com.haxepunk.utils.Input;
 import com.haxepunk.utils.Key;
 import haxepunk.screen.ScaleMode;
 import haxe.Http;
+import com.haxepunk.Sfx;
 
 class FallingBall extends Scene
 {
@@ -18,6 +19,10 @@ class FallingBall extends Scene
 	var win:Bool;
 	var finished:Bool = false;
 	var resized:Bool = false;
+
+  var w:Sfx;
+  var f:Sfx;
+  var s:Sfx;
 
 	override public function begin()
 	{
@@ -53,6 +58,11 @@ class FallingBall extends Scene
 		catcher.followCamera = true;
 		add(catcher);
 
+    w = new Sfx("audio/FallingBallSucc.ogg");
+    f = new Sfx("audio/FallingBallFail.ogg");
+    s = new Sfx("audio/FallingBallSfx.ogg");
+
+    s.play();
 	}
 
 	function should_move():Bool {
@@ -87,6 +97,12 @@ class FallingBall extends Scene
 			camera.y = 0;
 			win = bottle.x > 380 && bottle.x < 580;
 			finished = true;
+      s.stop();
+      if(win) {
+        w.play();
+      } else {
+        f.play();
+      }
 		}
 
 		if(!finished) {
