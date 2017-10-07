@@ -7,8 +7,9 @@ import random
 
 lock = threading.Lock()
 post_lock = threading.Lock()
-players_connected = 0
-MAX_PLAYERS = 4
+players_connected_get = 0
+players_connected_post = 0
+MAX_PLAYERS = 1
 gameIdCalculated = False
 gameRunning = False
 nextGameId = 0
@@ -21,14 +22,16 @@ GAME_ORDER = [x for x in range(totalGames)]
 random.shuffle(GAME_ORDER)
 
 def reset_state():
-    global players_connected 
+    global players_connected_get 
+    global players_connected_post 
     global gameIdCalculated 
     global gameRunning 
     global nextGameId 
     global playerIdGen 
     global livesPerGame 
     global lives 
-    players_connected = 0
+    players_connected_get = 0
+    players_connected_post = 0
     gameIdCalculated = False
     gameRunning = False
     nextGameId = 0
@@ -53,7 +56,7 @@ def next_game():
 
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
-        global players_connected
+        global players_connected_get
         global MAX_PLAYERS
         global gameIdCalculated
         global nextGameId
@@ -69,15 +72,15 @@ class Handler(BaseHTTPRequestHandler):
         lives = [livesPerGame,  livesPerGame,
                  livesPerGame,  livesPerGame]
         lock.acquire()
-        if players_connected == MAX_PLAYERS:
-            players_connected = 0
-        players_connected = players_connected + 1
+        if players_connected_get == MAX_PLAYERS:
+            players_connected_get = 0
+        players_connected_get = players_connected_get + 1
         currentPlayerId = next_id()
         if not gameIdCalculated:
             next_game()
             gameIdCalculated = True
         lock.release()
-        while(players_connected < MAX_PLAYERS):
+        while(players_connected_get < MAX_PLAYERS):
             pass
 
         gameIdCalculated = False
@@ -94,7 +97,7 @@ class Handler(BaseHTTPRequestHandler):
         global gameIdCalculated
         global lives
         global post_lock
-        global players_connected
+        global players_connected_post
         global GAME_ORDER
         content_len = int(self.headers.getheader('content-length'))
         post_body = self.rfile.read(content_len)
@@ -102,10 +105,11 @@ class Handler(BaseHTTPRequestHandler):
         self.end_headers()
 
         data = json.loads(post_body)
+        print "got post request: " + post_body
 
         post_lock.acquire()
-        if players_connected == MAX_PLAYERS:
-            players_connected = 0
+        if players_connected_post == MAX_PLAYERS:
+            players_connected_post = 0
         if not gameIdCalculated:
             next_game()
             gameIdCalculated = True
@@ -113,10 +117,11 @@ class Handler(BaseHTTPRequestHandler):
             print "player lost"
             lives[int(data['player_id'])] -= 1
             print lives
-        players_connected += 1
+        players_connected_post += 1
+        print players_connected_post
         post_lock.release()
 
-        while(players_connected < MAX_PLAYERS):
+        while(players_connected_post < MAX_PLAYERS):
             pass
         gameIdCalculated = False
 
