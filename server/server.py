@@ -14,7 +14,8 @@ gameRunning = False
 nextGameId = 0
 playerIdGen = 0
 totalGames = 5
-livesPerGame = 4
+livesPerGame = 3
+PLAYERS_NOT_COUNTED = 0
 lives =  [livesPerGame,  livesPerGame,
           livesPerGame,  livesPerGame]
 GAME_ORDER = [x for x in range(totalGames)]
@@ -28,6 +29,7 @@ def reset_state():
     global playerIdGen 
     global livesPerGame 
     global lives 
+    global PLAYERS_NOT_COUNTED
     players_connected = 0
     gameIdCalculated = False
     gameRunning = False
@@ -36,7 +38,7 @@ def reset_state():
     livesPerGame = 4
     lives =  [livesPerGame,  livesPerGame,
               livesPerGame,  livesPerGame]
-
+    PLAYERS_NOT_COUNTED = 0
 
 def next_id():
     global playerIdGen
@@ -71,6 +73,7 @@ class Handler(BaseHTTPRequestHandler):
         lock.acquire()
         if players_connected == MAX_PLAYERS:
             players_connected = 0
+
         players_connected = players_connected + 1
         currentPlayerId = next_id()
         if not gameIdCalculated:
@@ -96,6 +99,7 @@ class Handler(BaseHTTPRequestHandler):
         global post_lock
         global players_connected
         global GAME_ORDER
+        global PLAYERS_NOT_COUNTED
         content_len = int(self.headers.getheader('content-length'))
         post_body = self.rfile.read(content_len)
         self.send_response(200)
@@ -104,23 +108,34 @@ class Handler(BaseHTTPRequestHandler):
         data = json.loads(post_body)
 
         post_lock.acquire()
-        if players_connected == MAX_PLAYERS:
+        print "players connected = " + str(players_connected)
+        if players_connected + PLAYERS_NOT_COUNTED >= MAX_PLAYERS:
             players_connected = 0
         if not gameIdCalculated:
             next_game()
             gameIdCalculated = True
+        player_id = int(data['player_id'])
         if data['player_won'] == False:
-            print "player lost"
-            lives[int(data['player_id'])] -= 1
-            print lives
+            lives[player_id] -= 1
         players_connected += 1
         post_lock.release()
+        players_lost = [x for x in lives if x <= 0]
+        print "players lost size " + str(len(players_lost))
 
-        while(players_connected < MAX_PLAYERS):
+        while(players_connected + PLAYERS_NOT_COUNTED < MAX_PLAYERS):
             pass
+        PLAYERS_NOT_COUNTED = len(players_lost)
         gameIdCalculated = False
 
-        msg = json.dumps({'game_id': GAME_ORDER[nextGameId], 'lives': lives})
+        has_this_player_lost = lives[player_id] <= 0
+        other_active_players = [(k,v) for k,v in enumerate(lives) if k !=
+                player_id and v > 0]
+        print "other_active: " + str(other_active_players)
+        
+        msg = json.dumps({'game_id': GAME_ORDER[nextGameId],
+            'lives': lives,
+            'winrar': (not has_this_player_lost) and len(other_active_players) == 0
+            })
         print "returning from post " + msg
         self.wfile.write(msg)
         return
