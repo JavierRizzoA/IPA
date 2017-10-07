@@ -57,7 +57,7 @@ class Ball extends Entity
         acceleration = 0;
 
 
-        if (Input.check("up"))
+        if (Input.check("up")||Input.mouseDown)
         {
             acceleration = 1.5;
         }

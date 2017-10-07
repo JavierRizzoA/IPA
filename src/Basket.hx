@@ -67,9 +67,9 @@ class Basket extends Scene
 	}
 
 	public function initial(){
-		Good= new Ball(0,416,HXP.random);
-		Good1= new Ball(320,416,HXP.random);
-		Good2= new Ball(576,416,HXP.random);
+		Good= new Ball(0,476,HXP.random);
+		Good1= new Ball(416,476,HXP.random);
+		Good2= new Ball(896,476,HXP.random);
 		
 		Hole1= new Entity(320,0,new Image("graphics/goal.png"));
 		
