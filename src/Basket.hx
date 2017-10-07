@@ -32,8 +32,9 @@ class Basket extends Scene
 
 	override public function update() {
 		time += HXP.elapsed;
-		if(time > 4) {
+		if(time > 6) {
 		    Globals.get_next_game(winer, function(data) {
+		 		trace(data);
         		HXP.scene = new Score(data);
       		});
 		}

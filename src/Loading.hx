@@ -11,6 +11,7 @@ class Loading extends Scene {
 		Globals.greet(function(data:String) {
 			var d:Dynamic = haxe.Json.parse(data);
 			Globals.player_id = d.player_id;
+			//trace(Globals.player_id);
 			HXP.scene = Globals.get_scene(d.game_id);
 		});
 	}

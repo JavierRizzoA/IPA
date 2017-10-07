@@ -23,6 +23,7 @@ class Score extends Scene {
 		new Text("" + state.lives[2], 100, 100, 200, 200),
 		new Text("" + state.lives[3], 100, 100, 200, 200)];
 
+		trace(Globals.player_id);
 		array[Globals.player_id].addStyle("red", {color: 0xFF0000});
 
 		for(i in array) {
