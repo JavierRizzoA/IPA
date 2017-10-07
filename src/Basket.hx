@@ -21,6 +21,9 @@ class Basket extends Scene
 	}
 
 	override public function begin(){
+		
+		HXP.screen.scaleX = HXP.width / 960;
+		HXP.screen.scaleY = HXP.height / 540;
 		add(Background); 
 		add(Hole1);
 		add(Good);
