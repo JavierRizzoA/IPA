@@ -12,4 +12,8 @@ class Loading extends Scene {
 		Globals.player_id = greet.player_id;
 		HXP.scene = Globals.get_scene(greet.game_id);
 	}
+
+	override public function update() {
+		super.update();
+	}
 }
