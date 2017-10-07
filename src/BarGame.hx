@@ -13,6 +13,8 @@ class BarGame extends Scene {
   private var e:Entity;
   private var cashada:Bool;
   private var cagua:Entity;
+  private var time:Float = 0;
+  private var wait_time:Float = 5;
 
   override public function begin() {
     anims = [for(i in 0 ... 8) new Image("graphics/bar/sprite_" + i + ".png")];
@@ -29,6 +31,12 @@ class BarGame extends Scene {
   }
 
   override public function update() {
+    time += HXP.elapsed;
+
+    if(time >= wait_time) {
+      HXP.scene = new Score(Globals.get_next_game(cashada));
+    }
+
     animsT[frame] -= HXP.elapsed;
     if(animsT[frame] < 0) {
       frame++;

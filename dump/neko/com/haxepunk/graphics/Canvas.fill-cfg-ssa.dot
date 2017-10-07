@@ -1,0 +1,133 @@
+digraph graphname {
+	node [shape=plaintext];
+n16201[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(16201) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n16200[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(16200) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n16199[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(16199) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n16198[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(16198) BKConditional</td></tr>
+	<tr><td port="e0" align="left">xx = 0</td></tr>
+	<tr><td port="e1" align="left">yy = yy + this._maxHeight</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n16197[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(16197) BKNormal</td></tr>
+	<tr><td port="e0" align="left">var buffer = `1[`]</td></tr>
+	<tr><td port="e1" align="left">` = ` + 1</td></tr>
+	<tr><td port="e2" align="left">this._rect.x = rect.x - xx</td></tr>
+	<tr><td port="e3" align="left">this._rect.y = rect.y - yy</td></tr>
+	<tr><td port="e4" align="left">buffer.fillRect(this._rect, color)</td></tr>
+	<tr><td port="e5" align="left">xx = xx + this._maxWidth</td></tr>
+	<tr><td port="e6" align="left">var tmp = xx &gt;= this._width</td></tr>
+	<tr><td port="e7" align="left">@:cond-branch tmp</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n16196[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(16196) BKConditional</td></tr>
+	<tr><td port="e0" align="left">break</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n16195[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(16195) BKNormal</td></tr>
+	<tr><td port="e0" align="left">var tmp = ! ((` &lt; `1.length))</td></tr>
+	<tr><td port="e1" align="left">@:cond-branch tmp</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n16194[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(16194) BKLoopHead</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n16193[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(16193) BKNormal</td></tr>
+	<tr><td port="e0" align="left">while ((true)) @:block 16195</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n16192[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(16192) BKSub</td></tr>
+	<tr><td port="e0" align="left">var ` = 0</td></tr>
+	<tr><td port="e1" align="left">var `1 = this._buffers</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n16191[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(16191) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n16190[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(16190) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n16189[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(16189) BKConditional</td></tr>
+	<tr><td port="e0" align="left">var color = alpha * 255</td></tr>
+	<tr><td port="e1" align="left">var color = Std.int(color)</td></tr>
+	<tr><td port="e2" align="left">var color = color &lt;&lt; 24</td></tr>
+	<tr><td port="e3" align="left">var color = 16777215 &amp; color</td></tr>
+	<tr><td port="e4" align="left">color = color | color</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n16188[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(16188) BKConditional</td></tr>
+	<tr><td port="e0" align="left">color = 0</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n16187[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(16187) BKConditional</td></tr>
+	<tr><td port="e0" align="left">var tmp = alpha &lt;= 0</td></tr>
+	<tr><td port="e1" align="left">@:cond-branch tmp</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n16186[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(16186) BKConditional</td></tr>
+	<tr><td port="e0" align="left">color = color | -16777216</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n16185[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(16185) BKFunctionEnd</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n16184[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(16184) BKFunctionBegin</td></tr>
+	<tr><td port="e0" align="left">var xx = 0</td></tr>
+	<tr><td port="e1" align="left">var yy = 0</td></tr>
+	<tr><td port="e2" align="left">var buffer</td></tr>
+	<tr><td port="e3" align="left">this._rect.width = rect.width</td></tr>
+	<tr><td port="e4" align="left">this._rect.height = rect.height</td></tr>
+	<tr><td port="e5" align="left">var tmp = alpha &gt;= 1</td></tr>
+	<tr><td port="e6" align="left">@:cond-branch tmp</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n1[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(1) BKRoot</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n1:out -> n16184:in[label="CFGFunction"];
+n16184:out -> n16187:in[label="CFGCondElse"];
+n16184:out -> n16186:in[label="CFGCondBranch true"];
+n16186:out -> n16191:in[label="CFGGoto"];
+n16191:out -> n16192:in[label="CFGGoto"];
+n16192:out -> n16193:in[label="CFGGoto"];
+n16193:out -> n16194:in[label="CFGGoto"];
+n16194:out -> n16195:in[label="CFGGoto"];
+n16195:out -> n16197:in[label="CFGCondElse"];
+n16195:out -> n16196:in[label="CFGCondBranch true"];
+n16196:out -> n16200:in[label="CFGGoto"];
+n16200:out -> n16201:in[label="CFGGoto"];
+n16201:out -> n16185:in[label="CFGGoto"];
+n16197:out -> n16199:in[label="CFGCondElse"];
+n16197:out -> n16198:in[label="CFGCondBranch true"];
+n16198:out -> n16199:in[label="CFGGoto"];
+n16199:out -> n16194:in[label="CFGGoto"];
+n16187:out -> n16189:in[label="CFGCondElse"];
+n16187:out -> n16188:in[label="CFGCondBranch true"];
+n16188:out -> n16190:in[label="CFGGoto"];
+n16190:out -> n16191:in[label="CFGGoto"];
+n16189:out -> n16190:in[label="CFGGoto"];
+}

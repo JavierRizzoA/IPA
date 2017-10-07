@@ -1,0 +1,41 @@
+digraph graphname {
+n16201 [shape=box,label="(16201)"];
+n16200 [shape=box,label="(16200)"];
+n16199 [shape=box,label="(16199)"];
+n16198 [shape=box,label="(16198)\nxx = 0\nyy = yy + this._maxHeight"];
+n16197 [shape=box,label="(16197)\nvar buffer = `1[`]\n` = ` + 1\nthis._rect.x = rect.x - xx\nthis._rect.y = rect.y - yy\nbuffer.fillRect(this._rect, color)\nxx = xx + this._maxWidth\nvar tmp = xx >= this._width\n@:cond-branch tmp"];
+n16197 -> n16198[style="dashed",color="gray",label="then"];
+n16197 -> n16199[style="dashed",color="gray",label="next"];
+n16196 [shape=box,label="(16196)\nbreak"];
+n16195 [shape=box,label="(16195)\nvar tmp = ! ((` < `1.length))\n@:cond-branch tmp"];
+n16195 -> n16196[style="dashed",color="gray",label="then"];
+n16195 -> n16197[style="dashed",color="gray",label="next"];
+n16194 [shape=box,label="<loop-head>
+(16194)"];
+n16193 [shape=box,label="(16193)\nwhile ((true)) @:block 16195"];
+n16193 -> n16194[style="dashed",color="gray",label="loop-head"];
+n16193 -> n16195[style="dashed",color="gray",label="loop-body"];
+n16193 -> n16200[style="dashed",color="gray",label="next"];
+n16192 [shape=box,label="(16192)\nvar ` = 0\nvar `1 = this._buffers"];
+n16192 -> n16193[style="dashed",color="gray",label="merge"];
+n16191 [shape=box,label="(16191)"];
+n16191 -> n16192[style="dashed",color="gray",label="sub"];
+n16191 -> n16201[style="dashed",color="gray",label="next"];
+n16190 [shape=box,label="(16190)"];
+n16189 [shape=box,label="(16189)\nvar color = alpha * 255\nvar color = Std.int(color)\nvar color = color << 24\nvar color = 16777215 & color\ncolor = color | color"];
+n16188 [shape=box,label="(16188)\ncolor = 0"];
+n16187 [shape=box,label="(16187)\nvar tmp = alpha <= 0\n@:cond-branch tmp"];
+n16187 -> n16188[style="dashed",color="gray",label="then"];
+n16187 -> n16189[style="dashed",color="gray",label="else"];
+n16187 -> n16190[style="dashed",color="gray",label="next"];
+n16186 [shape=box,label="(16186)\ncolor = color | -16777216"];
+n16185 [shape=box,label="<function-end>
+(16185)"];
+n16184 [shape=box,label="<function-begin>
+(16184)\nvar xx = 0\nvar yy = 0\nvar buffer\nthis._rect.width = rect.width\nthis._rect.height = rect.height\nvar tmp = alpha >= 1\n@:cond-branch tmp"];
+n16184 -> n16186[style="dashed",color="gray",label="then"];
+n16184 -> n16187[style="dashed",color="gray",label="else"];
+n16184 -> n16191[style="dashed",color="gray",label="next"];
+n1 [shape=box,label="<root>
+(1)"];
+}

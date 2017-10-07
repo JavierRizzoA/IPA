@@ -1,0 +1,47 @@
+digraph graphname {
+n16201 [shape=box,label="(16201)\nScopes: 0"];
+n16200 [shape=box,label="(16200)\nScopes: 5, 0"];
+n16199 [shape=box,label="(16199)\nLoops: 0\nScopes: 6, 5, 0"];
+n16198 [shape=box,label="(16198)\nLoops: 0\nScopes: 8, 6, 5, 0\nxx = 0\nyy = yy + this._maxHeight"];
+n16197 [shape=box,label="(16197)\nLoops: 0\nScopes: 6, 5, 0\nvar buffer = `1[`]\n` = ` + 1\nthis._rect.x = rect.x - xx\nthis._rect.y = rect.y - yy\nbuffer.fillRect(this._rect, color)\nxx = xx + this._maxWidth\nvar tmp = xx >= this._width\n@:cond-branch tmp"];
+n16196 [shape=box,label="(16196)\nLoops: 0\nScopes: 7, 6, 5, 0\nbreak"];
+n16195 [shape=box,label="(16195)\nLoops: 0\nScopes: 6, 5, 0\nvar tmp = ! ((` < `1.length))\n@:cond-branch tmp"];
+n16194 [shape=box,label="<loop-head>
+(16194)\nLoops: 0\nScopes: 6, 5, 0"];
+n16193 [shape=box,label="(16193)\nScopes: 5, 0\nwhile ((true)) @:block 16195"];
+n16192 [shape=box,label="(16192)\nScopes: 5, 0\nvar ` = 0\nvar `1 = this._buffers"];
+n16191 [shape=box,label="(16191)\nScopes: 0"];
+n16190 [shape=box,label="(16190)\nScopes: 2, 0"];
+n16189 [shape=box,label="(16189)\nScopes: 4, 2, 0\nvar color = alpha * 255\nvar color = Std.int(color)\nvar color = color << 24\nvar color = 16777215 & color\ncolor = color | color"];
+n16188 [shape=box,label="(16188)\nScopes: 3, 2, 0\ncolor = 0"];
+n16187 [shape=box,label="(16187)\nScopes: 2, 0\nvar tmp = alpha <= 0\n@:cond-branch tmp"];
+n16186 [shape=box,label="(16186)\nScopes: 1, 0\ncolor = color | -16777216"];
+n16185 [shape=box,label="<function-end>
+(16185)"];
+n16184 [shape=box,label="<function-begin>
+(16184)\nScopes: 0\nvar xx = 0\nvar yy = 0\nvar buffer\nthis._rect.width = rect.width\nthis._rect.height = rect.height\nvar tmp = alpha >= 1\n@:cond-branch tmp"];
+n1 [shape=box,label="<root>
+(1)"];
+n1 -> n16184[label="function"];
+n16184 -> n16187[label="else"];
+n16184 -> n16186[label="branch"];
+n16186 -> n16191[label="goto"];
+n16191 -> n16192[label="goto"];
+n16192 -> n16193[label="goto"];
+n16193 -> n16194[label="goto"];
+n16194 -> n16195[label="goto"];
+n16195 -> n16197[label="else"];
+n16195 -> n16196[label="branch"];
+n16196 -> n16200[label="goto"];
+n16200 -> n16201[label="goto"];
+n16201 -> n16185[label="goto"];
+n16197 -> n16199[label="else"];
+n16197 -> n16198[label="branch"];
+n16198 -> n16199[label="goto"];
+n16199 -> n16194[label="goto"];
+n16187 -> n16189[label="else"];
+n16187 -> n16188[label="branch"];
+n16188 -> n16190[label="goto"];
+n16190 -> n16191[label="goto"];
+n16189 -> n16190[label="goto"];
+}

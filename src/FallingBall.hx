@@ -4,9 +4,9 @@ import com.haxepunk.HXP;
 import com.haxepunk.Entity;
 import com.haxepunk.graphics.Backdrop;
 import com.haxepunk.graphics.Graphiclist;
-import haxe.Timer;
 import com.haxepunk.utils.Input;
 import com.haxepunk.utils.Key;
+import haxe.Http;
 
 class FallingBall extends Scene
 {
@@ -14,9 +14,14 @@ class FallingBall extends Scene
 	var bottle_image:Image;
 	var bottle_speed:Float;
 	var time:Float = 0;
+	var win:Bool;
+	var finished:Bool = false;
 
 	override public function begin()
 	{
+
+		HXP.screen.scaleX = HXP.width / 960;
+		HXP.screen.scaleY = HXP.height / 540;
 		var b1:Backdrop;
 		b1 = new Backdrop("graphics/sky.png", true, true);
 		b1.scrollY = 0.4;
@@ -40,25 +45,14 @@ class FallingBall extends Scene
 		bottle.followCamera = true;
 		add(bottle);
 		bottle_speed = 0;
+
+		var catcher:Entity = new Entity(230, 350, new Image("graphics/catch.png"));
+		catcher.followCamera = true;
+		add(catcher);
+
 	}
 
-	override public function update() {
-		super.update();
-
-		time += HXP.elapsed;
-
-		if(time >= 10) {
-			if(bottle.x > 380 && bottle.x < 580) {
-				trace("you win");
-			}
-			else {
-				trace("you lose");
-			}
-		}
-
-		camera.y -= 100;
-		bottle_image.angle += 10;
-
+	function should_move():Bool {
 		var extra_chance:Float;
 		if(bottle.x >= 480) {
 			extra_chance = (960 - bottle.x) / 480;
@@ -70,27 +64,60 @@ class FallingBall extends Scene
 		extra_chance *= 0.1;
 
 		if(Math.random() < 0.01 + extra_chance) {
-			bottle_speed = (Math.random() * 30) - 15;
+			return true;
 		}
 
-		if(bottle.x < 30) {
-			bottle_speed = Math.abs(bottle_speed);
+		return false;
+	}
+
+	override public function update() {
+		super.update();
+
+		time += HXP.elapsed;
+
+		if(time >= 5 && !finished) {
+			camera.y = 0;
+			win = bottle.x > 380 && bottle.x < 580;
+			finished = true;
 		}
 
-		if(bottle.x > 930) {
-			if(bottle_speed > 0) {
-				bottle_speed *= -1;
+		if(!finished) {
+			camera.y -= 100;
+			bottle_image.angle += 10;
+
+			if(should_move()) {
+				bottle_speed = (Math.random() * 30) - 15;
+			}
+
+			if(bottle.x < 30) {
+				bottle.x = 30;
+			}
+
+			if(bottle.x > 930) {
+				bottle.x = 930;
+			}
+
+			if(Input.check(Key.RIGHT)) {
+				bottle.x += 20;
+			}
+
+			if(Input.check(Key.LEFT)) {
+				bottle.x -= 20;
+			}
+
+			bottle.x += bottle_speed;
+		}
+		else {
+			bottle.y += 20;
+
+			if(win && bottle.y >= 300) {
+				bottle.y = 360;
+				bottle.x = 420;
+			}
+
+			if(time > 7) {
+				HXP.scene = new Score(Globals.get_next_game(win));
 			}
 		}
-
-		if(Input.check(Key.RIGHT)) {
-			bottle.x += 20;
-		}
-
-		if(Input.check(Key.LEFT)) {
-			bottle.x -= 20;
-		}
-
-		bottle.x += bottle_speed;
 	}
-}
+}	
