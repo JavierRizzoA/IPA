@@ -2,6 +2,7 @@ import com.haxepunk.Entity;
 import com.haxepunk.HXP;
 import com.haxepunk.graphics.Image;
 import com.haxepunk.utils.Input;
+import com.haxepunk.Sfx;
 
 class Bird extends Entity {
 
@@ -9,6 +10,8 @@ class Bird extends Entity {
   private var m:Bool;
   private var vel:Float = 0;
   private var img:Image;
+  private var sfx:Array<Sfx>;
+  private var n:Int;
 
   public function new(x:Float, y:Float) {
     super(x, y);
@@ -20,6 +23,8 @@ class Bird extends Entity {
     setHitbox(50,50);
     dead = false;
     m = true;
+    sfx = [for(i in 1 ... 5) new Sfx("audio/FloppySfx" + i + ".ogg")];
+    n = 0;
   }
 
   public override function update() {
@@ -30,6 +35,9 @@ class Bird extends Entity {
     if(Input.mouseDown && m && !dead) {
       vel = -10;
       m  = false;
+      sfx[n].play();
+      n++;
+      n%=4;
       
     }
     if(!Input.mouseDown) {
