@@ -33,7 +33,7 @@ class Baseball extends Scene {
 
     e += HXP.elapsed;
 
-    if(e > 4) {
+    if(e > 7) {
       Globals.get_next_game(ball.hit, function(data) {
         HXP.scene = new Score(data);
       });
