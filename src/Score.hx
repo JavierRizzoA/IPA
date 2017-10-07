@@ -24,7 +24,7 @@ class Score extends Scene {
 		new Text("" + state.lives[2], 100, 100, 200, 200),
 		new Text("" + state.lives[3], 100, 100, 200, 200)];
 
-		array[Globals.player_id] = new Text("" + state.lives[1], 100, 100, 200, 200, options);
+		array[Globals.player_id] = new Text("" + state.lives[Globals.player_id], 100, 100, 200, 200, options);
 
 		for(i in array) {
 			i.size = 60;
