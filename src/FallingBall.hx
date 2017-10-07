@@ -26,7 +26,6 @@ class FallingBall extends Scene
 		HXP.screen.scaleMode.setBaseSize(960, 540);
 		HXP.resize(HXP.windowWidth, HXP.windowHeight);
 		var b1:Backdrop;
-		HXP.screen.refresh();
 		b1 = new Backdrop("graphics/sky.png", true, true);
 		b1.scrollY = 0.4;
 		b1.scale = 1.2;
