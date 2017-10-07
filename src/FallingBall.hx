@@ -6,6 +6,7 @@ import com.haxepunk.graphics.Backdrop;
 import com.haxepunk.graphics.Graphiclist;
 import com.haxepunk.utils.Input;
 import com.haxepunk.utils.Key;
+import haxepunk.screen.ScaleMode;
 import haxe.Http;
 
 class FallingBall extends Scene
@@ -20,8 +21,9 @@ class FallingBall extends Scene
 	override public function begin()
 	{
 
-		HXP.screen.scaleX = HXP.width / 960;
-		HXP.screen.scaleY = HXP.height / 540;
+		HXP.screen.scaleMode = new ScaleMode();
+		HXP.screen.scaleMode.setBaseSize(960, 540);
+		HXP.resize(HXP.windowWidth, HXP.windowHeight);
 		var b1:Backdrop;
 		b1 = new Backdrop("graphics/sky.png", true, true);
 		b1.scrollY = 0.4;
