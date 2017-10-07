@@ -21,11 +21,7 @@ class FlappyGuy extends Scene {
 
   public override function update() {
     time += HXP.elapsed;
-
-    if(Input.check(Key.SPACE)) {
-      HXP.scene = new FlappyGuy();
-    }
-
+    
     if(time > 4) {
       Globals.get_next_game(!bird.dead, function(data) {
         HXP.scene = new Score(data);
