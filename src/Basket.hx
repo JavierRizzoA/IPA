@@ -2,22 +2,25 @@ import com.haxepunk.Scene;
 import com.haxepunk.Entity;
 import com.haxepunk.graphics.Image;
 import com.haxepunk.HXP;
+import com.haxepunk.Sfx;
 
 class Basket extends Scene
 {
-    public var Good:Ball;
-    public var Good1:Ball;
-    public var Good2:Ball;
+  public var Good:Ball;
+  public var Good1:Ball;
+  public var Good2:Ball;
 	public var Hole1:Entity;
 	public var Background:Entity;
 	public var total:Int;
 	public var winer:Bool;
 	private var time:Float = 0;
+  private var sfx:Sfx;
 
 	public function new(){
 		super();
 		this.initial();
 		total=3;
+    sfx = new Sfx("audio/BasketSfx.ogg");
 	}
 
 	override public function begin(){
@@ -28,6 +31,7 @@ class Basket extends Scene
 		add(Good);
 		add(Good1);
 		add(Good2);
+    sfx.loop();
 	}
 
 	override public function update() {
@@ -37,6 +41,7 @@ class Basket extends Scene
 		 		trace(data);
         		HXP.scene = new Score(data);
       		});
+        sfx.stop();
 		}
 
 		Good.update();
