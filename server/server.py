@@ -9,7 +9,7 @@ lock = threading.Lock()
 post_lock = threading.Lock()
 players_connected_get = 0
 players_connected_post = 0
-MAX_PLAYERS = 1
+MAX_PLAYERS = 4
 gameIdCalculated = False
 gameRunning = False
 nextGameId = 0
@@ -73,6 +73,7 @@ class Handler(BaseHTTPRequestHandler):
 
         lives = [livesPerGame,  livesPerGame,
                  livesPerGame,  livesPerGame]
+        MAX_PLAYERS = 4
         lock.acquire()
         if players_connected_get == MAX_PLAYERS:
             players_connected_get = 0
@@ -102,6 +103,7 @@ class Handler(BaseHTTPRequestHandler):
         global players_connected_post
         global GAME_ORDER
         global PLAYERS_NOT_COUNTED
+        global MAX_PLAYERS
         content_len = int(self.headers.getheader('content-length'))
         post_body = self.rfile.read(content_len)
         self.send_response(200)
@@ -112,20 +114,22 @@ class Handler(BaseHTTPRequestHandler):
 
         post_lock.acquire()
         print "players connected = " + str(players_connected_post)
-        if players_connected_post + PLAYERS_NOT_COUNTED >= MAX_PLAYERS:
-            players_connected_post = 0
         if not gameIdCalculated:
             next_game()
             gameIdCalculated = True
+            players_connected_post = 0
         player_id = int(data['player_id'])
         if data['player_won'] == False:
             lives[player_id] -= 1
-        players_connected_post += 1
-        post_lock.release()
+        if lives[player_id] > 0:
+            players_connected_post += 1
+        else:
+            MAX_PLAYERS -= 1
         players_lost = [x for x in lives if x <= 0]
+        post_lock.release()
         print "players lost size " + str(len(players_lost))
 
-        while(players_connected_post + PLAYERS_NOT_COUNTED < MAX_PLAYERS):
+        while(players_connected_post < MAX_PLAYERS):
             pass
         PLAYERS_NOT_COUNTED = len(players_lost)
         gameIdCalculated = False
@@ -135,10 +139,11 @@ class Handler(BaseHTTPRequestHandler):
                 player_id and v > 0]
         print "other_active: " + str(other_active_players)
         
-        msg = json.dumps({'game_id': GAME_ORDER[nextGameId],
-            'lives': lives,
-            'winrar': (not has_this_player_lost) and len(other_active_players) == 0
-            })
+        m = {'game_id': GAME_ORDER[nextGameId],
+            'lives': lives}
+        if (not has_this_player_lost) and len(other_active_players) == 0:
+            m['won'] = True
+        msg = json.dumps(m)
         print "returning from post " + msg
         self.wfile.write(msg)
         return
